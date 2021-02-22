@@ -27,6 +27,7 @@ function Commands(){
   this.help = function(name, msg){
     if(aliases[name]) name = aliases[name];
     let cmd = commands[name];
+    if(!cmd) return general_help(msg); // TODO later show general help
     let usage = cmd.usage;
     if(!usage) return;
 
@@ -50,6 +51,29 @@ function Commands(){
       cmd.usage_cache = value;
     }
 
+    let embed = new Discord.MessageEmbed()
+    	.setColor('#00ff99')
+    	.setDescription(`\`\`\`\n${value}\n\`\`\``);
+
+    msg.channel.send(embed);
+  }
+
+  function general_help(msg){
+    let value = `-command <args...> | command <args...> | command <args...>`;
+    value += `\n-i <input image>`;
+    value += `\n  i<0 image previously sent in channel`;
+    value += `\n  i>=0 image in stack`;
+    value += `\n  i=link (self-explanatory)`;
+    value += `\n  i=mention (uses user's avi)`;
+    value += `\n-ii <number>`;
+    value += `\n  Pushes the n previously sent images to the stack`;
+    value += `\n\nEach command pushes the resulting image to the stack.`;
+
+    let l = [];
+    for(let i in commands){
+      l.push(i);
+    }
+    value += '\n\n'+l.join(',');
     let embed = new Discord.MessageEmbed()
     	.setColor('#00ff99')
     	.setDescription(`\`\`\`\n${value}\n\`\`\``);
