@@ -11,3 +11,12 @@ module.exports.call = async function(msg, data, stack, gm){
     // .in('-geometry', '+0+0');
   return img;
 };
+module.exports.usage = {
+  args: ['operator'],
+  explanation: 'Composes image over another with operator.',
+  optional: {
+    '--stack':{
+      explanation: 'Force it to use last 4 in stack.'
+    }
+  }
+};

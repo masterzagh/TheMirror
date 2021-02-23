@@ -29,6 +29,9 @@ module.exports.usage = {
     '-delay':{
       aliases: ['-d'],
       arg: 'delay'
+    },
+    '--stack':{
+      explanation: 'Use images from the entire stack.'
     }
   }
 };

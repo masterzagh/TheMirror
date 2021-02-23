@@ -92,7 +92,8 @@ function Commands(){
         }
       }
     }
-    if(argIndex !== undefined) return data[""][argIndex];
+    if(argIndex !== undefined && data[""][argIndex])
+      return data[""][argIndex];
     return defaultValue;
   }
 }
