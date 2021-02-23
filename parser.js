@@ -18,11 +18,11 @@ function Parser(){
       commands.help(parts[1], msg);
       return;
     }else if(content.startsWith('alias')){
-      let parts = content.match(/^alias ([^\s]+) (.+)$/);
+      let parts = content.match(/^alias( --g)? ([^\s]+) (.+)$/);
       if(parts){
-        if(!aliases[msg.author.id]) aliases[msg.author.id] = {};
-        aliases[msg.author.id][parts[1]] = parts[2].split('|');
-        console.log(aliases);
+        let id = parts[1]?'bot':msg.author.id;
+        if(!aliases[id]) aliases[id] = {};
+        aliases[id][parts[2]] = parts[3].split('|');
         return;
       }
     }
@@ -185,8 +185,9 @@ function Parser(){
         }
 
         // Buffer data for next command and inject alias into parts
-        if(aliases[msg.author.id] && aliases[msg.author.id][name]){
-          parts.splice(pi+1, 0, ...aliases[msg.author.id][name]);
+        let aliasArray = aliases[msg.author.id] && aliases[msg.author.id][name] || aliases.bot && aliases.bot[name];
+        if(aliasArray){
+          parts.splice(pi+1, 0, ...aliasArray);
           for(let i in data){
             let d = data[i];
             if(d instanceof Array){

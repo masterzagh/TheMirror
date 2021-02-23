@@ -4,11 +4,12 @@ module.exports.call = async function(msg, data, stack, gm){
   let list = [];
   if(data.stack) list = stack;
   else list = data.i.map(i => stack[i]);
-  if(!list || list.length == 0) return;
+  if(list.length == 0) return;
 
   let loop = +this.get(data, 'loop', 0, 0);
   let delay = +this.get(data, 'delay', 1, 30);
-  let img = gm(list.shift().openHttp()).delay(delay).setFormat('GIF');
+  let img = gm(list.shift().openHttp())
+    .delay(delay).in('+repage', '').setFormat('GIF');
   if(loop) img = img.loop(loop);
 
   list.forEach(l => {
