@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const { createCanvas, loadImage } = require('canvas');
 const commands = require('./commands');
 const gm = require('./gm-promise');
 
