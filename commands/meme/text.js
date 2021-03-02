@@ -1,4 +1,3 @@
-const measure = require('string-pixel-width');
 module.exports.name = 'text';
 module.exports.aliases = ['txt'];
 module.exports.call = async function(msg, data, stack, gm){
@@ -26,9 +25,9 @@ module.exports.call = async function(msg, data, stack, gm){
     img = img.encoding('Unicode')
       .stroke('black', strokeWidth)
       .fill('white')
-      .font('./impact/impact.ttf', topSize);
+      .font('./fonts/impact.ttf', topSize);
 
-    let lines = wrapText(topText, topSize, size.width);
+    let lines = gm.wrapText(topText, topSize, size.width);
     lines.forEach((line, i) => {
       img = img.drawText(0, fontHeight + margin + i*fontHeight*1.2, line, 'North');
     });
@@ -44,9 +43,9 @@ module.exports.call = async function(msg, data, stack, gm){
     img = img.encoding('Unicode')
       .stroke('black', strokeWidth)
       .fill('white')
-      .font('./impact/impact.ttf', fontSize);
+      .font('./fonts/impact.ttf', botSize);
 
-    let lines = wrapText(bottomText, fontSize, size.width);
+    let lines = gm.wrapText(bottomText, botSize, size.width);
     lines.reverse().forEach((line, i) => {
       img = img.drawText(0, margin + i*fontHeight*1.2, line, 'South');
     });
@@ -68,20 +67,3 @@ module.exports.usage = {
     }
   }
 };
-
-function wrapText(text, fontSize, width){
-  let lines = [];
-  let parts = text.split(' ');
-  text = parts.shift();
-  for(let i=0;i<parts.length;i++){
-    let part = parts[i];
-    if(measure(text+' '+part, {size: fontSize}) > width*1.2){
-      lines.push(text);
-      text = part;
-    }else{
-      text += ' '+part;
-    }
-  }
-  lines.push(text);
-  return lines
-}

@@ -1,6 +1,7 @@
 const gm = require('gm');
 const https = require('https');
 const {Buffer} = require('buffer');
+const measure = require('string-pixel-width');
 
 gm.prototype.toBuffer = function(){
   return new Promise((resolve, reject) => {
@@ -62,6 +63,23 @@ gm.loadImage = function(url){
   });
 }
 
+// Utils
+gm.wrapText = function(text, fontSize, width){
+  let lines = [];
+  let parts = text.split(' ');
+  text = parts.shift();
+  for(let i=0;i<parts.length;i++){
+    let part = parts[i];
+    if(measure(text+' '+part, {size: fontSize}) > width*1.2){
+      lines.push(text);
+      text = part;
+    }else{
+      text += ' '+part;
+    }
+  }
+  lines.push(text);
+  return lines
+}
 
 /* GM Server for sending */
 const uuid = require('uuid');
