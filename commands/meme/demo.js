@@ -1,5 +1,5 @@
 module.exports.name = 'demo';
-module.exports.aliases = [];
+module.exports.aliases = ['dem'];
 module.exports.call = async function(msg, data, stack, gm){
   let imgStack = stack.fetchSingle(data);
   if(!imgStack) return;
