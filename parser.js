@@ -127,6 +127,7 @@ function Parser(){
 
               if(url){
                 let img = await gm.fromUrl(url);
+                img.autoOrient();
                 let index = stack.push(img) - 1;
                 match = index;
               }
@@ -143,6 +144,7 @@ function Parser(){
                   let imgs = images[t];
                   for(let l=0;l<imgs.length;l++){
                     let img = await gm.fromUrl(imgs[l]);
+                    img.autoOrient();
                     let index = stack.push(img) - 1;
                     data.i.push(index);
 
@@ -181,7 +183,9 @@ function Parser(){
             }
           }
           let url = images[type][0];
-          stack.push(await gm.fromUrl(url));
+          let img = await gm.fromUrl(url);
+          img.autoOrient();
+          stack.push(img);
         }
 
         // Buffer data for next command and inject alias into parts
