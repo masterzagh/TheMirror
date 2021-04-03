@@ -104,6 +104,7 @@ function readDir(dir){
     let f = dir+'/'+file;
     if(fs.lstatSync(f).isDirectory()) return readDir(f);
 
+    if(!f.endsWith('.js')) return;
     let command = require(f);
     commands.add(command.name, command);
     command.aliases.forEach(alias => {
